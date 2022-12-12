@@ -1,3 +1,5 @@
 # Data
 data/
 indexes/
+.ipynb_checkpoints/
+models/
