@@ -4,15 +4,9 @@ def score_to_rank(scores):
     return list([ranking for _, ranking in sorted(zip(scores, indices), reverse=True)])
 
 # Evaluation
-def precision(query_relevancy_labels, k):
-    return (1/k)*sum(query_relevancy_labels[:k])
-    
-def recall(query_relevancy_labels, k):
-    if sum(query_relevancy_labels) == 0:
+def reciprocal_rank(query_relevancy_labels):
+    if not 1 in query_relevancy_labels:
         return 0
-    return sum(query_relevancy_labels[:k])/sum(query_relevancy_labels)
 
-def F_score(query_relevancy_labels, k):
-    prekie = precision(query_relevancy_labels, k)
-    reka = recall(query_relevancy_labels, k)
-    return (2*prekie*reka)/(prekie+reka) if prekie + reka != 0 else 0
+    first_relevant_idx = next(idx for idx, label in enumerate(query_relevancy_labels) if label==1)
+    return 1 / (first_relevant_idx + 1)
